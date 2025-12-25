@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Happy New Year 2026 ✨</title>
+    
+    <!-- Fonts & Icons (Optimized) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Sofia&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- THEME VARIABLES --- */
+        :root {
+            --bg-color: #000000;
+            --theme-color: #FFD700;
+            --theme-grad: linear-gradient(135deg, #FFE000, #FFB300);
+            --neon-blue: #00f3ff;
+            --text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body {
+            background-color: var(--bg-color);
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            text-align: center;
+            min-height: 100vh;
+        }
+
+        /* --- FIREWORKS --- */
+        #fireworks {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1; 
+        }
+
+        /* --- REVEAL OVERLAY --- */
+        #reveal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 9999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .gift-box {
+            font-size: 80px; color: var(--theme-color); cursor: pointer;
+            filter: drop-shadow(0 0 20px var(--theme-color));
+            animation: bounce 2s infinite;
+            margin: 20px;
+        }
+        
+        .tap-hint { color: #aaa; animation: pulse 1s infinite; font-size: 14px; }
+
+        /* --- MAIN CONTAINER --- */
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 500px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: rgba(0, 0, 0, 0.85); 
+            padding-bottom: 50px;
+            display: none;
+            opacity: 0;
+        }
+
+        .container.show-content {
+            display: block;
+            animation: fadeIn 0.8s forwards;
+        }
+
+        /* --- THEME SWITCHER --- */
+        .theme-panel {
+            display: flex; justify-content: center; gap: 15px; margin-top: 50px; margin-bottom: 20px;
+        }
+        .theme-dot {
+            width: 30px; height: 30px; border-radius: 50%; cursor: pointer;
+            border: 2px solid #fff; 
+        }
+        .t-gold { background: #FFD700; }
+        .t-red { background: #ff2e2e; }
+        .t-blue { background: #00f3ff; }
+
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3 { font-family: 'Sofia', cursive; }
+        
+        .theme-text {
+            background: var(--theme-grad); -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: var(--text-shadow);
+        }
+
+        /* --- PHOTO FRAME --- */
+        .frame-box {
+            width: 250px; height: 250px; margin: 10px auto;
+            position: relative; background: #111;
+            border: 2px solid var(--theme-color);
+            border-radius: 15px; overflow: hidden;
+            box-shadow: 0 0 15px var(--theme-color); 
+            display: flex; align-items: center; justify-content: center;
+        }
+        .frame-box img { width: 100%; height: 100%; object-fit: cover; display: none; }
+
+        /* --- COUNTDOWN --- */
+        .countdown { display: flex; justify-content: center; gap: 8px; margin: 15px 0; }
+        .time-box { background: rgba(255,255,255,0.05); border: 1px solid #333; padding: 8px; border-radius: 8px; width: 55px; }
+        .t-val { font-size: 18px; font-weight: bold; color: var(--theme-color); display: block; }
+        .t-lbl { font-size: 8px; text-transform: uppercase; color: #ccc; }
+
+        /* --- FUN SECTIONS --- */
+        .fun-box {
+            margin: 15px; padding: 15px;
+            background: rgba(20, 20, 20, 0.8);
+            border-radius: 12px; border: 1px solid #333;
+        }
+        .fun-btn {
+            background: #222; color: #fff; border: 1px solid var(--theme-color);
+            padding: 10px; border-radius: 25px; margin-top: 10px; cursor: pointer;
+            font-size: 13px; width: 100%;
+        }
+        .result-text { margin-top: 10px; color: var(--neon-blue); font-weight: bold; font-size: 14px; min-height: 20px; }
+        .poll-opts { display: flex; justify-content: center; gap: 10px; margin-top: 10px; }
+        .poll-btn { font-size: 20px; background: none; border: 1px solid #444; border-radius: 50%; width: 45px; height: 45px; cursor: pointer; }
+
+        /* --- FORM --- */
+        .card-panel {
+            margin: 20px; background: rgba(30,30,30,0.9);
+            padding: 20px; border-radius: 15px; border: 1px solid #333;
+        }
+        input[type="text"] {
+            width: 100%; padding: 12px; margin-bottom: 10px;
+            background: #000; border: 1px solid var(--theme-color);
+            color: #fff; border-radius: 5px; text-align: center;
+        }
+        .btn-main {
+            background: var(--theme-grad); border: none; padding: 12px; width: 100%;
+            border-radius: 50px; font-weight: bold; cursor: pointer; color: #000;
+            font-size: 16px; margin-top: 10px;
+        }
+
+        /* --- NEW SHARE BUTTONS (Vertical Stack) --- */
+        .share-container {
+            display: none; /* Hidden initially */
+            margin-top: 15px;
+            animation: fadeIn 0.5s;
+        }
+        .share-full-btn {
+            width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 14px; border-radius: 50px; text-decoration: none;
+            font-weight: bold; font-size: 16px; margin-bottom: 12px;
+            color: #fff; border: none; cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            transition: transform 0.1s;
+        }
+        .share-full-btn:active { transform: scale(0.96); }
+        
+        /* WhatsApp Green */
+        .btn-wa { background: #25D366; }
+        /* Other Blue */
+        .btn-other { background: linear-gradient(45deg, #0088cc, #0055aa); }
+        
+        .fa-whatsapp { font-size: 22px; }
+
+        /* --- GIFT SECTION --- */
+        .gift-section {
+            margin: 30px 15px;
+            background: #111;
+            border: 1px solid #333; border-top: 3px solid var(--theme-color);
+            border-radius: 20px; padding: 20px;
+        }
+        .qr-box { background: #fff; width: 130px; height: 130px; margin: 15px auto; border-radius: 10px; padding: 5px; }
+        .qr-box img { width: 100%; height: 100%; }
+        .upi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .upi-btn {
+            display: flex; align-items: center; justify-content: center; gap: 5px;
+            padding: 10px; border-radius: 6px; text-decoration: none;
+            color: #fff; font-size: 11px; font-weight: bold;
+        }
+        .paytm { background: #00B9F1; } .phonepe { background: #6739B7; } .gpay { background: #0F9D58; } .other { background: #333; border: 1px solid #555; }
+
+        /* --- UTILS --- */
+        .music-btn {
+            position: fixed; top: 15px; right: 15px; width: 35px; height: 35px;
+            background: rgba(0,0,0,0.8); border: 1px solid var(--theme-color); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; color: var(--theme-color); z-index: 1000;
+        }
+        .music-spin { animation: spin 3s linear infinite; }
+        .loader { width: 25px; height: 25px; border: 3px solid #fff; border-top-color: var(--theme-color); border-radius: 50%; animation: spin 1s infinite; margin: 10px auto; display: none; }
+        .live-counter { font-size: 11px; color: #777; margin-top: 10px; }
+        
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes pulse { 0% { opacity: 0.6; } 100% { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+    </style>
+</head>
+<body>
+
+    <!-- MUSIC -->
+    <div class="music-btn" onclick="toggleMusic()">
+        <i class="fas fa-music"></i>
+    </div>
+    <audio id="bg-audio"></audio>
+    <audio id="pop-sfx" src="https://assets.mixkit.co/active_storage/sfx/2007/2007-preview.mp3"></audio>
+
+    <!-- FIREWORKS -->
+    <canvas id="fireworks"></canvas>
+
+    <!-- REVEAL SCREEN -->
+    <div id="reveal-overlay">
+        <h1 class="theme-text">New Year 2026</h1>
+        <div class="gift-box" onclick="openGift()">
+            <i class="fas fa-gift"></i>
+        </div>
+        <p class="tap-hint">Tap Gift to Open 👆</p>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="container" id="main-content">
+        
+        <!-- THEME CHANGER -->
+        <div class="theme-panel">
+            <div class="theme-dot t-gold" onclick="setTheme('gold')"></div>
+            <div class="theme-dot t-red" onclick="setTheme('red')"></div>
+            <div class="theme-dot t-blue" onclick="setTheme('blue')"></div>
+        </div>
+
+        <div style="padding: 10px;">
+            <h1 class="theme-text" style="font-size: 2rem;">Happy New Year</h1>
+            <h2 style="font-size: 3.5rem; color: var(--neon-blue); margin: 0; line-height: 1;">2026</h2>
+            <h3 id="wishing-name" style="margin-top: 15px; color: #ddd; font-weight: 300;">
+                Wishing you Happiness!
+            </h3>
+        </div>
+
+        <!-- COUNTDOWN -->
+        <div class="countdown">
+            <div class="time-box"><span class="t-val" id="d">00</span><span class="t-lbl">Days</span></div>
+            <div class="time-box"><span class="t-val" id="h">00</span><span class="t-lbl">Hrs</span></div>
+            <div class="time-box"><span class="t-val" id="m">00</span><span class="t-lbl">Min</span></div>
+            <div class="time-box"><span class="t-val" id="s">00</span><span class="t-lbl">Sec</span></div>
+        </div>
+
+        <!-- PHOTO FRAME -->
+        <div class="frame-box">
+            <img id="user-img" src="" alt="Photo">
+            <div id="frame-txt" style="color:#666; font-size:12px;">Your Photo Here</div>
+        </div>
+
+        <!-- FUN FEATURES -->
+        <div class="fun-box">
+            <h3 style="color:var(--theme-color); font-size:16px;">🤣 Funny Resolution</h3>
+            <button class="fun-btn" onclick="getResolution()">Get Resolution</button>
+            <div id="res-result" class="result-text"></div>
+        </div>
+
+        <div class="fun-box">
+            <h3 style="color:var(--theme-color); font-size:16px;">🔮 Future Check</h3>
+            <button class="fun-btn" onclick="getPrediction()">Check Luck</button>
+            <div id="pred-result" class="result-text"></div>
+        </div>
+
+        <div class="fun-box">
+            <h3>How was 2025? 🗳️</h3>
+            <div class="poll-opts" id="poll-area">
+                <button class="poll-btn" onclick="vote(this)">😭</button>
+                <button class="poll-btn" onclick="vote(this)">😐</button>
+                <button class="poll-btn" onclick="vote(this)">🤩</button>
+            </div>
+            <div id="poll-msg" class="result-text" style="display:none;">Voted! ✅</div>
+        </div>
+
+        <!-- CREATE -->
+        <div class="card-panel">
+            <h3 style="color:var(--theme-color); margin-bottom:10px;">Create Yours 🪄</h3>
+            <input type="text" id="name-inp" placeholder="Enter Your Name">
+            
+            <button onclick="document.getElementById('file-inp').click()" style="background:none; border:1px solid #444; color:#ccc; padding:8px; width:100%; border-radius:5px;">
+                <i class="fas fa-camera"></i> Select Photo
+            </button>
+            <input type="file" id="file-inp" hidden accept="image/*" onchange="uploadFile()">
+            <div class="loader" id="loader"></div>
+
+            <!-- GENERATE BUTTON -->
+            <button class="btn-main" id="gen-btn" onclick="createCard()">Generate Link ✨</button>
+
+            <!-- 🔥 UPDATED SHARE BUTTONS (Hidden until generated) -->
+            <div id="share-box" class="share-container">
+                <a href="#" id="wa-btn-link" class="share-full-btn btn-wa">
+                    <i class="fab fa-whatsapp"></i> Share on WhatsApp
+                </a>
+                
+                <button onclick="nativeShare()" class="share-full-btn btn-other">
+                    <i class="fas fa-share-alt"></i> Share with Others
+                </button>
+            </div>
+
+        </div>
+
+        <!-- GIFT / UPI -->
+        <div class="gift-section">
+            <h3 style="color:var(--theme-color); margin-bottom:5px;">Send Gift 🎁</h3>
+            <div class="qr-box">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=YOUR_UPI_ID_HERE&pn=Developer" alt="QR">
+            </div>
+            <div class="upi-grid">
+                <a href="upi://pay?pa=YOUR_UPI_ID_HERE&pn=Pinkukumar&cu=INR" class="upi-btn paytm">Paytm</a>
+                <a href="upi://pay?pa=YOUR_UPI_ID_HERE&pn=Pinkukumar&cu=INR" class="upi-btn phonepe">PhonePe</a>
+                <a href="upi://pay?pa=YOUR_UPI_ID_HERE&pn=Pinkukumar&cu=INR" class="upi-btn gpay">GPay</a>
+                <a href="upi://pay?pa=YOUR_UPI_ID_HERE&pn=Pinkukumar&cu=INR" class="upi-btn other">Other</a>
+            </div>
+        </div>
+
+        <div class="dev-info" style="margin-top: 30px; color: #555; font-size: 11px; margin-bottom:20px;">
+            Developer by <b style="color:var(--neon-blue);">Pinkukumar (Manish)</b><br>
+            <div class="live-counter">⚡ <span id="visit-count">1,245</span> online</div>
+        </div>
+
+    </div>
+
+    <script>
+        // --- CONFIG ---
+        const API_KEY = '19254db7c34c475b8b64a3cf8cc72fd8'; 
+
+        // --- MUSIC ---
+        const songs = ["https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"];
+        let sIdx = 0;
+        const audio = document.getElementById('bg-audio');
+        function toggleMusic() {
+            const b = document.querySelector('.music-btn');
+            if(audio.paused) {
+                audio.src = songs[sIdx]; audio.play().catch(()=>{});
+                b.classList.add('music-spin'); b.innerHTML = '<i class="fas fa-pause"></i>';
+            } else {
+                audio.pause();
+                b.classList.remove('music-spin'); b.innerHTML = '<i class="fas fa-music"></i>';
+            }
+        }
+
+        // --- REVEAL ---
+        function openGift() {
+            document.getElementById('pop-sfx').play().catch(()=>{});
+            const over = document.getElementById('reveal-overlay');
+            over.style.opacity = '0';
+            setTimeout(() => {
+                over.style.display = 'none';
+                document.getElementById('main-content').classList.add('show-content');
+                startFire();
+                toggleMusic();
+            }, 500);
+        }
+
+        // --- THEME ---
+        function setTheme(c) {
+            const r = document.documentElement.style;
+            if(c==='red') { r.setProperty('--theme-color','#ff2e2e'); r.setProperty('--theme-grad','linear-gradient(135deg,#ff2e2e,#ff8f8f)'); r.setProperty('--neon-blue','#ffcc00'); }
+            else if(c==='blue') { r.setProperty('--theme-color','#00f3ff'); r.setProperty('--theme-grad','linear-gradient(135deg,#00f3ff,#0066ff)'); r.setProperty('--neon-blue','#ff00de'); }
+            else { r.setProperty('--theme-color','#FFD700'); r.setProperty('--theme-grad','linear-gradient(135deg,#FFE000,#FFB300)'); r.setProperty('--neon-blue','#00f3ff'); }
+        }
+
+        // --- FUN FUNCTIONS ---
+        const resolutions = ["Nahane ka record banaunga! 🚿", "Free Wi-Fi use karunga! 📶", "Gym jaunga (Sapne me)! 😴", "Diet karunga (Kal se)! 🍕"];
+        function getResolution() { document.getElementById('res-result').innerText = resolutions[Math.floor(Math.random()*resolutions.length)]; }
+
+        const predictions = ["Lottery lagne wali hai! 💰", "Shaadi pakki! 💍", "Foreign Trip! ✈️", "Paisa hi Paisa! 🤑"];
+        function getPrediction() { document.getElementById('pred-result').innerText = predictions[Math.floor(Math.random()*predictions.length)]; }
+
+        function vote(btn) { 
+            document.getElementById('poll-area').style.display='none'; 
+            document.getElementById('poll-msg').style.display='block'; 
+        }
+
+        // --- UPLOAD & SHARE ---
+        let imgUrl = "";
+        async function uploadFile(){
+            const f = document.getElementById('file-inp').files[0];
+            if(!f) return;
+            document.getElementById('loader').style.display='block';
+            const fd = new FormData(); fd.append("image", f);
+            try {
+                const r = await fetch(`https://api.imgbb.com/1/upload?key=${API_KEY}`, {method:"POST", body:fd});
+                const d = await r.json();
+                if(d.success) {
+                    imgUrl = d.data.url;
+                    document.getElementById('user-img').src=imgUrl;
+                    document.getElementById('user-img').style.display='block';
+                    document.getElementById('frame-txt').style.display='none';
+                }
+            } catch(e){}
+            document.getElementById('loader').style.display='none';
+        }
+
+        async function createCard() {
+            const n = document.getElementById('name-inp').value;
+            if(!n) { alert("Enter Name"); return; }
+            let url = window.location.href.split('?')[0] + `?name=${encodeURIComponent(n)}`;
+            if(imgUrl) url += `&img=${encodeURIComponent(imgUrl)}`;
+            
+            let short = url;
+            try {
+                const r = await fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(url)}`);
+                if(r.ok) short = await r.text();
+            } catch(e){}
+
+            const msg = `*${n}* sent you a 2026 Gift 🎁\nOpen: ${short}`;
+            
+            // Set WhatsApp Link dynamically
+            document.getElementById('wa-btn-link').href = `whatsapp://send?text=${encodeURIComponent(msg)}`;
+            
+            // Show Share Buttons & Hide Generate Button
+            document.getElementById('share-box').style.display = 'block';
+            document.getElementById('gen-btn').style.display = 'none';
+
+            window.shareObj = { title:"2026 Gift", text:msg, url:short };
+            alert("Link Generated! Share below 👇");
+        }
+
+        function nativeShare() { if(navigator.share) navigator.share(window.shareObj); else alert("Link Copied!"); }
+
+        // --- TIMER ---
+        const target = new Date("Jan 1, 2026 00:00:00").getTime();
+        setInterval(()=>{
+            const dif = target - new Date().getTime();
+            if(dif>0){
+                document.getElementById('d').innerText=Math.floor(dif/86400000);
+                document.getElementById('h').innerText=Math.floor((dif%86400000)/3600000);
+                document.getElementById('m').innerText=Math.floor((dif%3600000)/60000);
+                document.getElementById('s').innerText=Math.floor((dif%60000)/1000);
+            }
+        },1000);
+
+        // --- LOAD PARAMS ---
+        window.onload = () => {
+            const p = new URLSearchParams(window.location.search);
+            if(p.get('name')) document.getElementById('wishing-name').innerHTML=`Wishes from <b style="color:var(--theme-color)">${p.get('name')}</b>`;
+            if(p.get('img')) {
+                document.getElementById('user-img').src=p.get('img');
+                document.getElementById('user-img').style.display='block';
+                document.getElementById('frame-txt').style.display='none';
+            }
+            // Fake Counter
+            let c=1245; setInterval(()=>{c+=2;document.getElementById('visit-count').innerText=c;},3000);
+        }
+
+        // --- FIREWORKS ---
+        function startFire() {
+            const c = document.getElementById('fireworks');
+            const x = c.getContext('2d');
+            c.width = window.innerWidth; c.height = window.innerHeight;
+            let p = [];
+            function Part(px, py) {
+                this.x = px; this.y = py;
+                this.vx = (Math.random()-0.5)*8; this.vy = (Math.random()-0.5)*8;
+                this.a = 1; this.c = `hsl(${Math.random()*360},100%,50%)`;
+                this.up = function() { this.x+=this.vx; this.y+=this.vy; this.a-=0.03; }
+                this.dr = function() { x.globalAlpha=this.a; x.fillStyle=this.c; x.beginPath(); x.arc(this.x,this.y,2,0,6); x.fill(); }
+            }
+            function anim() {
+                requestAnimationFrame(anim);
+                x.clearRect(0,0,c.width,c.height);
+                if(Math.random()<0.03) { 
+                    let cx=Math.random()*c.width, cy=Math.random()*c.height/2;
+                    for(let i=0;i<20;i++) p.push(new Part(cx, cy));
+                }
+                p.forEach((k,i)=>{ k.up(); k.dr(); if(k.a<=0) p.splice(i,1); });
+            }
+            anim();
+        }
+    </script>
+</body>
+</html>
